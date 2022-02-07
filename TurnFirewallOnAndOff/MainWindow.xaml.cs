@@ -41,9 +41,16 @@ namespace TurnFirewallOnAndOff
             try
             {
                 if (FirewallStatus == "On") return;
+
                 string batchCommand = "netsh advfirewall set allprofiles state on";
                 string command = $"/c {batchCommand}";
-                Process.Start("CMD.exe", command);
+
+                Process p = new Process();
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.FileName = "CMD.exe";
+                p.StartInfo.Arguments = command;
+                p.Start();
+
                 FirewallStatus = "On";
             }
             catch (Exception ex)
@@ -57,9 +64,17 @@ namespace TurnFirewallOnAndOff
             try
             {
                 if (FirewallStatus == "Off") return;
+
                 string batchCommand = "netsh advfirewall set allprofiles state off";
+
                 string command = $"/c {batchCommand}";
-                Process.Start("CMD.exe", command);
+
+                Process p = new Process();
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.FileName = "CMD.exe";
+                p.StartInfo.Arguments = command;
+                p.Start();
+
                 FirewallStatus = "Off";
             }
             catch (Exception ex)
